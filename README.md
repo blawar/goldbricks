@@ -2,7 +2,13 @@
 
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg) [![Releases](https://img.shields.io/github/downloads/xortroll/goldleaf/total.svg)](https://github.com/XorTroll/Goldleaf/releases/latest) [![LatestVer](https://img.shields.io/github/release-pre/xortroll/goldleaf.svg)](https://github.com/XorTroll/Goldleaf/releases/latest)
 
-> Goldleaf is multipurpose homebrew tool for Nintendo Switch.
+> Goldleaf is multipurpose homebrew tool for Nintendo Switch for those souls with the impure of heart.
+
+# Potential Malicious Brick Warning
+
+Unfortunately this code might contain brick code, as the original author--XorTroll--has expressed intent on intentionally bricking some of his faithful users.  Unfortunately I have not had time to vet every line of his code, therefore I cannot guarantee that all of his previous code does not contain brick code, therefore you should use at all of his apps--including this one--with extreme caution.  And remember to always have a NAND backup.  Stay vigilent pedes.
+
+<img src="brick.png" alt="bricked" />
 
 <img src="Screenshot-gleaf.jpg" alt="drawing" width="400"/> <img src="Screenshot-quark.png" alt="drawing" width="300"/>
 
