@@ -102,7 +102,7 @@ namespace ui
                 else
                 {
                     pu::String ext = fs::GetExtension(itm);
-                    if(ext == "nsp") mitm->SetIcon(gsets.PathForResource("/FileSystem/NSP.png"));
+                    if(ext == "nsp" || ext == "nsz") mitm->SetIcon(gsets.PathForResource("/FileSystem/NSP.png"));
                     else if(ext == "nro") mitm->SetIcon(gsets.PathForResource("/FileSystem/NRO.png"));
                     else if(ext == "tik") mitm->SetIcon(gsets.PathForResource("/FileSystem/TIK.png"));
                     else if(ext == "cert") mitm->SetIcon(gsets.PathForResource("/FileSystem/CERT.png"));
@@ -178,7 +178,7 @@ namespace ui
         {
             pu::String ext = fs::GetExtension(itm);
             pu::String msg = set::GetDictionaryEntry(52) + " ";
-            if(ext == "nsp") msg += set::GetDictionaryEntry(53);
+            if(ext == "nsp" || ext == "nsz") msg += set::GetDictionaryEntry(53);
             else if(ext == "nro") msg += set::GetDictionaryEntry(54);
             else if(ext == "tik") msg += set::GetDictionaryEntry(55);
             else if(ext == "nxtheme") msg += set::GetDictionaryEntry(56);
@@ -190,7 +190,7 @@ namespace ui
             std::vector<pu::String> vopts;
             u32 copt = 5;
             bool ibin = this->gexp->IsFileBinary(fullitm);
-            if(ext == "nsp")
+            if(ext == "nsp" || ext == "nsz")
             {
                 vopts.push_back(set::GetDictionaryEntry(65));
                 copt = 6;
@@ -241,7 +241,7 @@ namespace ui
             int sopt = mainapp->CreateShowDialog(set::GetDictionaryEntry(76), msg, vopts, true);
             if(sopt < 0) return;
             int osopt = sopt;
-            if(ext == "nsp")
+            if(ext == "nsp" || ext == "nsz")
             {
                 switch(sopt)
                 {
@@ -485,7 +485,7 @@ namespace ui
             for(u32 i = 0; i < files.size(); i++)
             {
                 auto path = fullitm + "/" + files[i];
-                if(fs::GetExtension(path) == "nsp") nsps.push_back(files[i]);
+                if(fs::GetExtension(path) == "nsp" || fs::GetExtension(path) == "nsz") nsps.push_back(files[i]);
             }
             std::vector<pu::String> extraopts = { set::GetDictionaryEntry(281) };
             if(!nsps.empty()) extraopts.push_back(set::GetDictionaryEntry(282));

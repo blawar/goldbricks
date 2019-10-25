@@ -10,6 +10,10 @@ Unfortunately this code might contain brick code, as the original author--XorTro
 
 <img src="brick.png" alt="bricked" />
 
+# High Memory Requirement
+
+Due to unoptimized code, there is not much memory left to add NSZ support.  Therefore title installs will require that GoldBricks be ran in high memory more via title override or a piracy NSP forwarder.
+
 <img src="Screenshot-gleaf.jpg" alt="drawing" width="400"/> <img src="Screenshot-quark.png" alt="drawing" width="300"/>
 
 > Having any issues? Check [this help document](docs/FAQ.md) for help!

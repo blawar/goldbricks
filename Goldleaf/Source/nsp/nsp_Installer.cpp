@@ -32,6 +32,7 @@
 
 extern set::Settings gsets;
 
+
 namespace nsp
 {
     Installer::Installer(pu::String Path, fs::Explorer *Exp, Storage Location) : nspentry(Exp, Path), storage(static_cast<FsStorageId>(Location))
@@ -46,6 +47,7 @@ namespace nsp
     Result Installer::PrepareInstallation()
     {
         Result rc = err::Make(err::ErrorDescription::InvalidNSP);
+		
         if(nspentry.IsOk())
         {
             rc = 0;
