@@ -28,9 +28,9 @@ Unfortunately this code might contain brick code, as the original author--XorTro
 ## **[Download it from here!](https://github.com/XorTroll/Goldleaf/releases)**
 
 <p>
-<a href="https://www.patreon.com/xortroll"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" height="50" width="220"></a>
+<a href="https://www.telefonodelaesperanza.org">https://www.telefonodelaesperanza.org</a>
 <br>
-<b>Do you like my work? Become a patron and supporting it!</b>
+<b>Do you like my work? Please donate if you would like to continue to receieve updates from me!</b>
 </p>
 
 ## Features
