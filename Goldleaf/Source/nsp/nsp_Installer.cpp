@@ -20,6 +20,7 @@
 */
 
 #include <nsp/nsp_Installer.hpp>
+#include <nsp/nca_Writer.hpp>
 #include <err/err_Errors.hpp>
 #include <fs/fs_Explorer.hpp>
 #include <sys/stat.h>
@@ -314,6 +315,7 @@ namespace nsp
             ncmOpenContentStorage(storage, &cst);
             ncm::DeletePlaceHolder(&cst, &curid);
             ncm::CreatePlaceHolder(&cst, &curid, &curid, ncasize);
+            NcaWriter writer(curid, &cst);
             u64 noff = 0;
             u64 szrem = ncasize;
             while(szrem)
@@ -331,7 +333,7 @@ namespace nsp
                         rbytes = nspentry.ReadFromFile(idxncaname, noff, rsize, rdata);
                         break;
                 }
-                ncm::WritePlaceHolder(&cst, &curid, noff, rdata, rbytes);
+                writer.write(rdata, rbytes);
                 noff += rbytes;
                 szrem -= rbytes;
                 auto t2 = std::chrono::steady_clock::now();
@@ -339,6 +341,7 @@ namespace nsp
                 double bsec = (1000.0f / (double)diff) * rbytes; // By elapsed time and written bytes, compute how much data has been written in 1sec.
                 OnContentWrite(rnca, i, ncas.size(), (double)(noff + twrittensize), (double)totalsize, (u64)bsec);
             }
+            writer.close();
             twrittensize += noff;
             ncmContentStorageRegister(&cst, &curid, &curid);
             ncm::DeletePlaceHolder(&cst, &curid);

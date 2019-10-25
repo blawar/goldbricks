@@ -11,12 +11,12 @@ VER_MAJOR	:= 0
 VER_MINOR	:= 7
 VER_MICRO	:= 3
 
-APP_TITLE   := Goldleaf
+APP_TITLE   := GoldBricks
 APP_AUTHOR  := XorTroll
 APP_VERSION := $(VER_MAJOR).$(VER_MINOR).$(VER_MICRO)
 APP_TITLEID	:= 050032A5CF12E000
 
-TARGET      := Goldleaf
+TARGET      := GoldBricks
 ICON		:= Icon.jpg
 
 BUILD       := Build
@@ -36,7 +36,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -std=gnu++17
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:=  -lcurl -lz -lmbedtls -lmbedcrypto -lmbedx509 -lnx -lpu -lfreetype -lSDL2_mixer -lopusfile -lopus -lmodplug -lmpg123 -lvorbisidec -lSDL2 -lc -logg -lSDL2_ttf -lSDL2_gfx -lSDL2_image -lwebp -lpng -ljpeg `sdl2-config --libs` `freetype-config --libs`
+LIBS	:=  -lcurl -lz -lmbedtls -lmbedcrypto -lmbedx509 -lnx -lpu -lzstd -lssh2 -lfreetype -lSDL2_mixer -lopus -lmodplug -lmpg123 -lvorbisidec -lSDL2 -lc -logg -lSDL2_ttf -lSDL2_gfx -lSDL2_image -lpng -ljpeg `sdl2-config --libs` `freetype-config --libs`
 LIBDIRS	:= $(PORTLIBS) $(LIBNX) $(CURDIR)/../Plutonium/Plutonium/Output
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
