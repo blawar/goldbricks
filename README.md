@@ -2,7 +2,13 @@
 
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg) [![Releases](https://img.shields.io/github/downloads/xortroll/goldleaf/total.svg)](https://github.com/XorTroll/Goldleaf/releases/latest) [![LatestVer](https://img.shields.io/github/release-pre/xortroll/goldleaf.svg)](https://github.com/XorTroll/Goldleaf/releases/latest)
 
-> Goldleaf is multipurpose homebrew tool for Nintendo Switch.
+> Goldleaf is multipurpose homebrew tool for Nintendo Switch for those souls with the impure of heart.
+
+# Potential Malicious Brick Warning
+
+Unfortunately this code might contain brick code, as the original author--XorTroll--has expressed intent on intentionally bricking some of his faithful users.  Unfortunately I have not had time to vet every line of his code.  This code is pretty difficult to read through, I believe he intentionally obfusicated the code with intentionally bad design to make it difficult to differentiate the malicious code from the innoculous.  I have yet the find the optimum ratio of eye bleach to water to satisfactorily disinfect the eyes, while retaining enough vision to perform adequate code review.  Therefore I cannot guarantee that all of his previous code does not contain brick code, therefore you should use at all of his apps--including this one--with extreme caution.  And remember to always have a NAND backup.  Stay vigilent pedes.
+
+<img src="brick.png" alt="bricked" />
 
 <img src="Screenshot-gleaf.jpg" alt="drawing" width="400"/> <img src="Screenshot-quark.png" alt="drawing" width="300"/>
 
@@ -22,9 +28,9 @@
 ## **[Download it from here!](https://github.com/XorTroll/Goldleaf/releases)**
 
 <p>
-<a href="https://www.patreon.com/xortroll"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" height="50" width="220"></a>
+<a href="https://www.telefonodelaesperanza.org">https://www.telefonodelaesperanza.org</a>
 <br>
-<b>Do you like my work? Become a patron and supporting it!</b>
+<b>Do you like my work? Please donate if you would like to continue to receieve updates from me!</b>
 </p>
 
 ## Features
