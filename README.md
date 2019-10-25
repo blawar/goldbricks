@@ -4,15 +4,9 @@
 
 > Goldleaf is multipurpose homebrew tool for Nintendo Switch for those souls with the impure of heart.
 
-# Potential Malicious Brick Warning
-
-Unfortunately this code might contain brick code, as the original author--XorTroll--has expressed intent on intentionally bricking some of his faithful users.  Unfortunately I have not had time to vet every line of his code.  This code is pretty difficult to read through, I believe he intentionally obfusicated the code with intentionally bad design to make it difficult to differentiate the malicious code from the innoculous.  I have yet the find the optimum ratio of eye bleach to water to satisfactorily disinfect the eyes, while retaining enough vision to perform adequate code review.  Therefore I cannot guarantee that all of his previous code does not contain brick code, therefore you should use at all of his apps--including this one--with extreme caution.  And remember to always have a NAND backup.  Stay vigilent pedes.
-
-<img src="brick.png" alt="bricked" />
-
 # High Memory Requirement
 
-Due to unoptimized code, there is not much memory left to add NSZ support.  Therefore title installs will require that GoldBricks be ran in high memory more via title override or a piracy NSP forwarder.
+There is not enough free memory left to add NSZ support in applet mode.  Therefore title installs will require that GoldBricks be ran in high memory mode via title override or a piracy NSP forwarder.
 
 <img src="Screenshot-gleaf.jpg" alt="drawing" width="400"/> <img src="Screenshot-quark.png" alt="drawing" width="300"/>
 
@@ -121,7 +115,7 @@ Goldleaf is released along with a NSP, in order to launch Goldleaf as an install
 
 The NSP is a forwarder since **0.6**, what means that, instead of having Goldleaf's source inside the NSP, it simply loads the NRO from the SD card, meaning that only the NRO should be updated instead of having to reinstall the NSP.
 
-Goldleaf's forwarding code tries to locate Goldleaf (`Goldleaf.nro`) in `sd:/switch/` and `sd:/switch/Goldleaf/`. If it isn't found, an error message will be displayed.
+Goldleaf's forwarding code tries to locate Goldleaf (`GoldBricks.nro`) in `sd:/switch/` and `sd:/switch/Goldleaf/`. If it isn't found, an error message will be displayed.
 
 ## Settings
 
@@ -205,4 +199,4 @@ The main concepts of Goldleaf are and have been developed by me (XorTroll), but 
 
 ### Discord and beta testing
 
-If you would like to be more informed about my projects' status and support, you should check [my Discord server](https://discord.gg/3KpFyaH). It's a simple server for Nintendo hacking and homebrew, mainly focused on my projects. If you would like to be a beta-tester, then this is what you're looking for.
+If you would like to be more informed about my projects' status and support, you should check [my Discord server](https://discord.gg/yTSfphh). It's a simple server for Nintendo hacking and homebrew, mainly focused on my projects. If you would like to be a beta-tester, then this is what you're looking for.
