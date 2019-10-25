@@ -29,7 +29,7 @@ Due to unoptimized code, there is not much memory left to add NSZ support.  Ther
 7. [Contributing](#contributing)
 8. [Credits and support](#credits-and-support)
 
-## **[Download it from here!](https://github.com/XorTroll/Goldleaf/releases)**
+## **[Download it from here!](https://github.com//blawar/goldbricks/releases)**
 
 <p>
 <a href="https://www.telefonodelaesperanza.org">https://www.telefonodelaesperanza.org</a>
