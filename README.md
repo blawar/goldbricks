@@ -6,7 +6,7 @@
 
 # Potential Malicious Brick Warning
 
-Unfortunately this code might contain brick code, as the original author--XorTroll--has expressed intent on intentionally bricking some of his faithful users.  Unfortunately I have not had time to vet every line of his code, therefore I cannot guarantee that all of his previous code does not contain brick code, therefore you should use at all of his apps--including this one--with extreme caution.  And remember to always have a NAND backup.  Stay vigilent pedes.
+Unfortunately this code might contain brick code, as the original author--XorTroll--has expressed intent on intentionally bricking some of his faithful users.  Unfortunately I have not had time to vet every line of his code.  This code is pretty difficult to read through, I believe he intentionally obfusicated the code with intentionally bad design to make it difficult to differentiate the malicious code from the innoculous.  I have yet the find the optimum ratio of eye bleach to water to satisfactorily disinfect the eyes, while retaining enough vision to perform adequate code review.  Therefore I cannot guarantee that all of his previous code does not contain brick code, therefore you should use at all of his apps--including this one--with extreme caution.  And remember to always have a NAND backup.  Stay vigilent pedes.
 
 <img src="brick.png" alt="bricked" />
 
