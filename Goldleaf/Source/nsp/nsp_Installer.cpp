@@ -295,14 +295,30 @@ namespace nsp
             NcmNcaId curid = rnca.ContentId;
             pu::String ncaname = hos::ContentIdAsString(curid);
             if(rnca.Type == ncm::ContentType::Meta) ncaname += ".cnmt";
-            ncaname += ".nca";
-            u32 idxncaname = nspentry.GetFileIndexByName(ncaname);
+			
+			u32 idxncaname;
+			
+			if((idxncaname = nspentry.GetFileIndexByName(ncaname + ".nca")) != PFS0::INVALID_FILE)
+			{
+				ncaname += ".nca";
+			}
+			else if((idxncaname = nspentry.GetFileIndexByName(ncaname + ".ncz")) != PFS0::INVALID_FILE)
+			{
+				ncaname += ".ncz";
+			}
+			else
+			{
+				return -1;
+			}
+			
             auto cursize =  nspentry.GetFileSize(idxncaname);
             totalsize += cursize;
             ncaidxs.push_back(idxncaname);
             ncanames.push_back(ncaname);
             ncasizes.push_back(cursize);
         }
+		NcmContentStorage cst;
+        ncmOpenContentStorage(storage, &cst);
         for(u32 i = 0; i < ncas.size(); i++)
         {
             ncm::ContentRecord rnca = ncas[i];
@@ -310,11 +326,7 @@ namespace nsp
             pu::String ncaname = ncanames[i];
             u64 ncasize = ncasizes[i];
             u32 idxncaname = ncaidxs[i];
-
-            NcmContentStorage cst;
-            ncmOpenContentStorage(storage, &cst);
             ncm::DeletePlaceHolder(&cst, &curid);
-            ncm::CreatePlaceHolder(&cst, &curid, &curid, ncasize);
             NcaWriter writer(curid, &cst);
             u64 noff = 0;
             u64 szrem = ncasize;
@@ -345,8 +357,8 @@ namespace nsp
             twrittensize += noff;
             ncmContentStorageRegister(&cst, &curid, &curid);
             ncm::DeletePlaceHolder(&cst, &curid);
-            serviceClose(&cst.s);
         }
+		serviceClose(&cst.s);
         return rc;
     }
 

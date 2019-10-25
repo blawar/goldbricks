@@ -123,15 +123,13 @@ namespace nsp
 
     u32 PFS0::GetFileIndexByName(pu::String File)
     {
-        u32 idx = 0;
         for(u32 i = 0; i < this->files.size(); i++)
         {
             if(strcasecmp(this->files[i].Name.AsUTF8().c_str(), File.AsUTF8().c_str()) == 0)
             {
-                idx = i;
-                break;
+                return i;
             }
         }
-        return idx;
+        return INVALID_FILE;
     }
 }

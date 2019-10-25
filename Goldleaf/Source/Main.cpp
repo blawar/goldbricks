@@ -45,6 +45,7 @@ void Initialize()
     if(R_FAILED(setInitialize())) exit(1);
     if(R_FAILED(setsysInitialize())) exit(1);
     if(R_FAILED(usb::comms::Initialize())) exit(1);
+    if(R_FAILED(splCryptoInitialize())) exit(1);
     if(R_FAILED(splInitialize())) exit(1);
     if(R_FAILED(bpcInitialize())) exit(1);
     if(R_FAILED(nifmInitialize())) exit(1);
@@ -69,6 +70,7 @@ void Finalize()
     delete sdcd;
     bpcExit();
     splExit();
+    splCryptoExit();
     usb::comms::Exit();
     setsysExit();
     setExit();

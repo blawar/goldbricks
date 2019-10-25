@@ -39,6 +39,8 @@ namespace nsp
             u64 GetFileSize(u32 Index);
             void SaveFile(u32 Index, fs::Explorer *Exp, pu::String Path);
             u32 GetFileIndexByName(pu::String File);
+			
+			static const u32 INVALID_FILE = 0xFFFFFFFF;
         private:
             pu::String path;
             fs::Explorer *gexp;
