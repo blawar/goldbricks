@@ -4,7 +4,7 @@
 
 # USB Installer
 
-It is extremely important to note that this does not work with Quark, Fluffy, or NS-USBLoader.  This only works with [Nut](#nut-and-remote-pc) for USB installs.
+It is extremely important to note that this does not work with Quark, Fluffy, or NS-USBLoader.  This only works with [Nut](#nut-and-remote-pc) os SX Server for USB installs.
 
 If you really insist on using the old USB Installers, I will maintain a release that still has them.  Currently 0.7.3 in the releases section supports these old USB installers.
 
