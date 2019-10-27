@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -109,7 +109,7 @@ namespace dump
             pu::String tkey;
             pu::String orid;
             pu::String fappid = hos::FormatApplicationId(ApplicationId);
-            pu::String outdir = "sdmc:/" + GoldleafDir + "/dump/title/" + fappid;
+            pu::String outdir = "sdmc:/" + GoldBricksDir + "/dump/title/" + fappid;
             u32 tmpsz = 0;
             while(true)
             {

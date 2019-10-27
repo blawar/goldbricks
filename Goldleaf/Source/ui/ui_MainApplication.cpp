@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -719,7 +719,7 @@ namespace ui
     {
         if((Down & KEY_MINUS) && (GetCurrentApplicationId() != GOLDLEAF_APPID))
         {
-            // Don't allow closing if Goldleaf forwarder!
+            // Don't allow closing if GoldBricks forwarder!
             this->CloseWithFadeOut();
         }
         else if((Down & KEY_ZL) || (Down & KEY_ZR)) ShowPowerTasksDialog(set::GetDictionaryEntry(229), set::GetDictionaryEntry(230));

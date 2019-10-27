@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -153,12 +153,12 @@ void EnsureDirectories()
     auto sd = fs::GetSdCardExplorer();
     nsys->DeleteDirectory("Contents/temp");
     nsys->CreateDirectory("Contents/temp");
-    sd->CreateDirectory(GoldleafDir);
-    sd->CreateDirectory(GoldleafDir + "/meta");
-    sd->CreateDirectory(GoldleafDir + "/title");
-    sd->CreateDirectory(GoldleafDir + "/dump");
-    sd->CreateDirectory(GoldleafDir + "/userdata");
-    sd->CreateDirectory(GoldleafDir + "/dump/temp");
-    sd->CreateDirectory(GoldleafDir + "/dump/update");
-    sd->CreateDirectory(GoldleafDir + "/dump/title");
+    sd->CreateDirectory(GoldBricksDir);
+    sd->CreateDirectory(GoldBricksDir + "/meta");
+    sd->CreateDirectory(GoldBricksDir + "/title");
+    sd->CreateDirectory(GoldBricksDir + "/dump");
+    sd->CreateDirectory(GoldBricksDir + "/userdata");
+    sd->CreateDirectory(GoldBricksDir + "/dump/temp");
+    sd->CreateDirectory(GoldBricksDir + "/dump/update");
+    sd->CreateDirectory(GoldBricksDir + "/dump/title");
 }

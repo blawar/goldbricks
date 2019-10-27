@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -52,7 +52,7 @@ namespace ui
         this->downloadBar->SetVisible(false);
         this->infoText->SetText(set::GetDictionaryEntry(305));
         mainapp->CallForRender();
-        std::string js = net::RetrieveContent("https://api.github.com/repos/xortroll/goldleaf/releases", "application/json");
+        std::string js = net::RetrieveContent("https://api.github.com/repos/xortroll/goldbricks/releases", "application/json");
         JSON j = JSON::parse(js);
         std::string latestid = j[0]["tag_name"].get<std::string>();
         this->infoText->SetText(set::GetDictionaryEntry(306));
@@ -68,25 +68,25 @@ namespace ui
             int sopt = mainapp->CreateShowDialog(set::GetDictionaryEntry(284), set::GetDictionaryEntry(308), { set::GetDictionaryEntry(111), set::GetDictionaryEntry(18) }, true);
             if(sopt == 0)
             {
-                std::string baseurl = "https://github.com/XorTroll/Goldleaf/releases/download/" + latestid + "/Goldleaf";
-                fs::CreateDirectory("sdmc:/switch/Goldleaf");
-                fs::DeleteFile(TempGoldleafUpdateNro);
+                std::string baseurl = "https://github.com/XorTroll/GoldBricks/releases/download/" + latestid + "/GoldBricks";
+                fs::CreateDirectory("sdmc:/switch/GoldBricks");
+                fs::DeleteFile(TempGoldBricksUpdateNro);
                 this->infoText->SetText(set::GetDictionaryEntry(309));
                 mainapp->CallForRender();
                 this->downloadBar->SetVisible(true);
-                net::RetrieveToFile(baseurl + ".nro", TempGoldleafUpdateNro, [&](double Done, double Total)
+                net::RetrieveToFile(baseurl + ".nro", TempGoldBricksUpdateNro, [&](double Done, double Total)
                 {
                     this->downloadBar->SetMaxValue(Total);
                     this->downloadBar->SetProgress(Done);
                     mainapp->CallForRender();
                 });
-                if(fs::IsFile(TempGoldleafUpdateNro)) gupdated = true;
+                if(fs::IsFile(TempGoldBricksUpdateNro)) gupdated = true;
                 this->downloadBar->SetVisible(false);
                 mainapp->CallForRender();
                 sopt = mainapp->CreateShowDialog(set::GetDictionaryEntry(284), set::GetDictionaryEntry(310), { set::GetDictionaryEntry(111), set::GetDictionaryEntry(18) }, true);
                 if(sopt == 0)
                 {
-                    std::string nspfile = "sdmc:/switch/Goldleaf/Goldleaf.nsp";
+                    std::string nspfile = "sdmc:/switch/GoldBricks/GoldBricks.nsp";
                     fs::DeleteFile(nspfile);
                     this->infoText->SetText(set::GetDictionaryEntry(311));
                     mainapp->CallForRender();

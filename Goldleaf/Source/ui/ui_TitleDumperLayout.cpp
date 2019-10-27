@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -46,7 +46,7 @@ namespace ui
         mainapp->CallForRender();
         FsStorageId stid = static_cast<FsStorageId>(Target.Location);
         pu::String fappid = hos::FormatApplicationId(Target.ApplicationId);
-        pu::String outdir = "sdmc:/" + GoldleafDir + "/dump/title/" + fappid;
+        pu::String outdir = "sdmc:/" + GoldBricksDir + "/dump/title/" + fappid;
         fs::CreateDirectory(outdir);
         this->dumpText->SetText(set::GetDictionaryEntry(192));
         mainapp->CallForRender();
@@ -299,7 +299,7 @@ namespace ui
                 xdata = txdata;
             }
         }
-        pu::String fout = "sdmc:/" + GoldleafDir + "/dump/title/" + fappid + ".nsp";
+        pu::String fout = "sdmc:/" + GoldBricksDir + "/dump/title/" + fappid + ".nsp";
         fs::CreateConcatenationFile(fout);
         this->ncaBar->SetVisible(true);
         this->dumpText->SetText(set::GetDictionaryEntry(196));
@@ -310,13 +310,13 @@ namespace ui
             mainapp->CallForRender();
         });
         hos::UnlockAutoSleep();
-        fs::DeleteDirectory("sdmc:/" + GoldleafDir + "/dump/temp");
+        fs::DeleteDirectory("sdmc:/" + GoldBricksDir + "/dump/temp");
         fs::DeleteDirectory(outdir);
         if(ok) mainapp->ShowNotification(set::GetDictionaryEntry(197) + " '" + fout + "'");
         else
         {
             HandleResult(err::Make(err::ErrorDescription::CouldNotBuildNSP), set::GetDictionaryEntry(198));
-            fs::DeleteDirectory("sdmc:/" + GoldleafDir + "/dump");
+            fs::DeleteDirectory("sdmc:/" + GoldBricksDir + "/dump");
             EnsureDirectories();
         }
         serviceClose(&cst.s);

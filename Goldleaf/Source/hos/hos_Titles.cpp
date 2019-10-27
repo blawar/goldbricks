@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -116,7 +116,7 @@ namespace hos
         auto sdexp = fs::GetSdCardExplorer();
         if(nacp != NULL)
         {
-            pu::String fnacp = GoldleafDir + "/title/" + fappid + ".nacp";
+            pu::String fnacp = GoldBricksDir + "/title/" + fappid + ".nacp";
             sdexp->DeleteFile(fnacp);
             sdexp->WriteFileBlock(fnacp, (u8*)nacp, sizeof(NacpStruct));
             delete nacp;
@@ -124,7 +124,7 @@ namespace hos
         u8 *jpg = this->TryGetIcon();
         if(jpg != NULL)
         {
-            pu::String fjpg = GoldleafDir + "/title/" + fappid + ".jpg";
+            pu::String fjpg = GoldBricksDir + "/title/" + fappid + ".jpg";
             sdexp->DeleteFile(fjpg);
             sdexp->WriteFileBlock(fjpg, jpg, 0x20000);
             delete[] jpg;
@@ -386,12 +386,12 @@ namespace hos
 
     std::string GetExportedIconPath(u64 ApplicationId)
     {
-        return "sdmc:/" + GoldleafDir + "/title/" + FormatApplicationId(ApplicationId) + ".jpg";
+        return "sdmc:/" + GoldBricksDir + "/title/" + FormatApplicationId(ApplicationId) + ".jpg";
     }
 
     pu::String GetExportedNACPPath(u64 ApplicationId)
     {
-        return "sdmc:/" + GoldleafDir + "/title/" + FormatApplicationId(ApplicationId) + ".nacp";
+        return "sdmc:/" + GoldBricksDir + "/title/" + FormatApplicationId(ApplicationId) + ".nacp";
     }
 
     u64 GetBaseApplicationId(u64 ApplicationId, ncm::ContentMetaType Type)

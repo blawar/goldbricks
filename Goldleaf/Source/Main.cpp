@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -105,7 +105,7 @@ int main(int argc, char **argv)
     {
         romfsExit();
         fs::DeleteFile(argv[0]);
-        fs::RenameFile(TempGoldleafUpdateNro, argv[0]);
+        fs::RenameFile(TempGoldBricksUpdateNro, argv[0]);
     }
     Finalize();
     return 0;
