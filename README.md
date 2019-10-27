@@ -16,10 +16,11 @@ There is not enough free memory left to add NSZ support in applet mode.  Therefo
 2. [Disclaimer](#disclaimer)
 3. [Nut and remote PC](#nut-and-remote-pc)
 4. [GDrive Installs](#gdrive)
-5. [Settings](#settings)
-6. [Known bugs](#known-bugs)
-7. [Contributing](#contributing)
-8. [Credits and support](#credits-and-support)
+5. [Forwarder](#forwarder)
+6. [Settings](#settings)
+7. [Known bugs](#known-bugs)
+8. [Contributing](#contributing)
+9. [Credits and support](#credits-and-support)
 
 ## **[Download it from here!](https://github.com//blawar/goldbricks/releases)**
 
@@ -110,6 +111,12 @@ Nut can be downloaded here: <a href="https://github.com/blawar/nut">https://gith
 # GDrive
 
 To access GDrive, you must use Nut via USB, then access your PC through the gdrive folder in GoldBricks.  Team Drives are also supported.
+
+# Forwarder
+
+THe included forwarder--05000BADC0D30000.nsp--is an optional way to launch GoldBricks into high memory mode.  Title override also works.
+
+The forwarder was generated using the open source application Nro2Nsp located here: https://github.com/Root-MtX/Nro2Nsp
 
 ## Settings
 
