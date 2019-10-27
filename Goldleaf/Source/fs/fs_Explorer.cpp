@@ -28,6 +28,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <cctype>
+#include "rapidjson/document.h"
 
 namespace fs
 {
@@ -663,162 +664,121 @@ namespace fs
 
     std::vector<pu::String> USBPCDriveExplorer::GetDirectories(pu::String Path)
     {
-        std::vector<pu::String> dirs;
-        pu::String path = this->MakeFull(Path);
-        u32 dircount = 0;
-        auto rc = usb::ProcessCommand<usb::CommandId::GetDirectoryCount>(usb::InString(path), usb::Out32(dircount));
-        if(R_SUCCEEDED(rc))
-        {
-            for(u32 i = 0; i < dircount; i++)
-            {
-                pu::String dir;
-                rc = usb::ProcessCommand<usb::CommandId::GetDirectory>(usb::InString(path), usb::In32(i), usb::OutString(dir));
-                if(R_SUCCEEDED(rc)) dirs.push_back(dir);
-            }
-        }
-        return dirs;
+        return usb::GetDirectories(Path);
     }
 
     std::vector<pu::String> USBPCDriveExplorer::GetFiles(pu::String Path)
     {
-        std::vector<pu::String> files;
-        pu::String path = this->MakeFull(Path);
-        u32 filecount = 0;
-        auto rc = usb::ProcessCommand<usb::CommandId::GetFileCount>(usb::InString(path), usb::Out32(filecount));
-        if(R_SUCCEEDED(rc))
-        {
-            for(u32 i = 0; i < filecount; i++)
-            {
-                pu::String file;
-                rc = usb::ProcessCommand<usb::CommandId::GetFile>(usb::InString(path), usb::In32(i), usb::OutString(file));
-                if(R_SUCCEEDED(rc)) files.push_back(file);
-            }
-        }
-        return files;
+        return usb::GetFiles(Path);
     }
 
     bool USBPCDriveExplorer::Exists(pu::String Path)
     {
-        bool ex = false;
-        pu::String path = this->MakeFull(Path);
-        u32 type = 0;
-        u64 tmpfsz = 0;
-        usb::ProcessCommand<usb::CommandId::StatPath>(usb::InString(path), usb::Out32(type), usb::Out64(tmpfsz));
-        ex = ((type == 1) || (type == 2));
-        return ex;
+        return true;
     }
 
     bool USBPCDriveExplorer::IsFile(pu::String Path)
     {
-        bool ex = false;
-        pu::String path = this->MakeFull(Path);
-        u32 type = 0;
-        u64 tmpfsz = 0;
-        usb::ProcessCommand<usb::CommandId::StatPath>(usb::InString(path), usb::Out32(type), usb::Out64(tmpfsz));
-        ex = (type == 1);
-        return ex;
+        return Path.AsUTF8().find('.') != std::string::npos;
     }
 
     bool USBPCDriveExplorer::IsDirectory(pu::String Path)
     {
-        bool ex = false;
-        pu::String path = this->MakeFull(Path);
-        u32 type = 0;
-        u64 tmpfsz = 0;
-        usb::ProcessCommand<usb::CommandId::StatPath>(usb::InString(path), usb::Out32(type), usb::Out64(tmpfsz));
-        ex = (type == 2);
-        return ex;
+        return !IsFile(Path);
     }
 
     void USBPCDriveExplorer::CreateFile(pu::String Path)
     {
-        pu::String path = this->MakeFull(Path);
-        usb::ProcessCommand<usb::CommandId::Create>(usb::In32(1), usb::InString(path));
     }
 
     void USBPCDriveExplorer::CreateDirectory(pu::String Path)
     {
-        pu::String path = this->MakeFull(Path);
-        usb::ProcessCommand<usb::CommandId::Create>(usb::In32(2), usb::InString(path));
     }
 
     void USBPCDriveExplorer::RenameFile(pu::String Path, pu::String NewName)
     {
-        pu::String path = this->MakeFull(Path);
-        usb::ProcessCommand<usb::CommandId::Rename>(usb::In32(1), usb::InString(path), usb::InString(NewName));
     }
 
     void USBPCDriveExplorer::RenameDirectory(pu::String Path, pu::String NewName)
     {
-        pu::String path = this->MakeFull(Path);
-        usb::ProcessCommand<usb::CommandId::Rename>(usb::In32(2), usb::InString(path), usb::InString(NewName));
     }
 
     void USBPCDriveExplorer::DeleteFile(pu::String Path)
     {
-        pu::String path = this->MakeFull(Path);
-        usb::ProcessCommand<usb::CommandId::Delete>(usb::In32(1), usb::InString(path));
     }
 
     void USBPCDriveExplorer::DeleteDirectorySingle(pu::String Path)
     {
-        pu::String path = this->MakeFull(Path);
-        usb::ProcessCommand<usb::CommandId::Delete>(usb::In32(2), usb::InString(path));
     }
 
     u64 USBPCDriveExplorer::ReadFileBlock(pu::String Path, u64 Offset, u64 Size, u8 *Out)
     {
-        u64 rsize = 0;
-        pu::String path = this->MakeFull(Path);
-        usb::ProcessCommand<usb::CommandId::ReadFile>(usb::InString(path), usb::In64(Offset), usb::In64(Size), usb::Out64(rsize), usb::OutBuffer(Out, Size));
-        return rsize;
+		std::string pathRequest = "/api/file/";
+		pathRequest += usb::resolvePath(Path.AsUTF8());
+		pathRequest += "?start=";
+		pathRequest += std::to_string(Offset);
+		pathRequest += "&end=";
+		pathRequest += std::to_string(Offset + Size);
+		
+        std::vector<pu::String> results;
+		std::vector<u8> buffer;
+		usb::send(pathRequest.c_str());
+		
+		s64 Remaining = (s64)Size;
+		
+		while(Remaining > 0)
+		{
+			buffer.resize(0);
+			
+			usb::recv(buffer);
+		
+			memcpy(Out, buffer.data(), buffer.size());
+			
+			Out += buffer.size();
+			Remaining -= buffer.size();
+		}
+
+        return Size - Remaining;
     }
 
     u64 USBPCDriveExplorer::WriteFileBlock(pu::String Path, u8 *Data, u64 Size)
     {
-        pu::String path = this->MakeFull(Path);
-        usb::ProcessCommand<usb::CommandId::WriteFile>(usb::InString(path), usb::In64(Size), usb::InBuffer(Data, Size));
-        return Size;
+        return 0;
     }
 
     u64 USBPCDriveExplorer::GetFileSize(pu::String Path)
     {
-        u64 sz = 0;
-        pu::String path = this->MakeFull(Path);
-        u32 tmptype = 0;
-        usb::ProcessCommand<usb::CommandId::StatPath>(usb::InString(path), usb::Out32(tmptype), usb::Out64(sz));
-        return sz;
+		std::string pathRequest = "/api/fileSize/";
+		pathRequest += usb::resolvePath(Path.AsUTF8());
+        std::vector<pu::String> results;
+		std::vector<u8> buffer;
+		usb::send(pathRequest.c_str());
+		usb::recv(buffer);
+		
+		buffer.push_back(0);
+
+		rapidjson::Document j;
+		j.Parse((const char*)buffer.data());
+
+		if (j.HasMember("size") && j["size"].IsUint64())
+		{
+			return j["size"].GetUint64();
+		}
+        return 0;
     }
 
     u64 USBPCDriveExplorer::GetTotalSpace()
     {
-        u64 sz = 0;
-        /*
-        if(usb::WriteCommandInput(usb::CommandId::GetDriveTotalSpace))
-        {
-            usb::WriteString(this->mntname);
-            if(!usb::Read64(sz)){}
-        }
-        */
-        return sz;
+        return 0;
     }
 
     u64 USBPCDriveExplorer::GetFreeSpace()
     {
-        u64 sz = 0;
-        /*
-        if(usb::WriteCommandInput(usb::CommandId::GetDriveFreeSpace))
-        {
-            usb::WriteString(this->mntname);
-            if(!usb::Read64(sz)){}
-        }
-        */
-        return sz;
+        return 0;
     }
 
     void USBPCDriveExplorer::SetArchiveBit(pu::String Path)
     {
-        // Non-HOS operating systems don't handle archive bit for what we want, so :P
     }
 
     FileSystemExplorer::FileSystemExplorer(pu::String MountName, pu::String DisplayName, FsFileSystem *FileSystem)

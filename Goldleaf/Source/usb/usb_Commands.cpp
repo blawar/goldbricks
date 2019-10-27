@@ -21,266 +21,191 @@
 
 #include <usb/usb_Commands.hpp>
 #include <usb/usb_Communications.hpp>
+#include <sstream>
+#include <iomanip>
+#include "rapidjson/document.h"
+#include <malloc.h>
 
 namespace usb
 {
-    InCommandBlock::InCommandBlock(CommandId CmdId)
-    {
-        base.position = 0;
-        base.blockbuf = new(std::align_val_t(0x1000)) u8[BlockSize]();
-        Write32(InputMagic);
-        Write32(static_cast<u32>(CmdId));
-    }
+	class Packet
+	{
+	public:
+		class Header
+		{
+		public:
+			static const u32 MAGIC = 0x12121212;
+			u32 magic = 0;
+			u32 command = 0;
+			u64 size = 0;
+			u32 threadId = 0;
+			u16 packetIndex = 0;
+			u16 packetCount = 0;
+			u64 timestamp = 0;
 
-    void InCommandBlock::Write32(u32 Value)
-    {
-        WriteBuffer(&Value, sizeof(u32));
-    }
+			bool isValid()
+			{
+				return magic == MAGIC;
+			}
 
-    void InCommandBlock::Write64(u64 Value)
-    {
-        WriteBuffer(&Value, sizeof(u64));
-    }
+			void clear()
+			{
+				command = 0;
+				size = 0;
+				threadId = 0;
+				packetIndex = 0;
+				packetCount = 0;
+				timestamp = 0;
+				magic = 0;
+			}
+		} PACKED;
+	};
+	
+	void send(const char* data, u32 channel)
+	{
+		if(data)
+		{
+			send((const u8*)data, strlen(data), channel);
+		}
+	}
+	
+	void send(const u8* data, u64 sz, u32 channel)
+	{
+		Packet::Header header;
+		header.magic = Packet::Header::MAGIC;
+		header.size = sz;
+		header.command = 1;
+		header.threadId = channel;
+		
+		Write(&header, sizeof(header));
+	
 
-    void InCommandBlock::WriteString(pu::String Value)
-    {
-        Write32(Value.length());
-        WriteBuffer((char16_t*)Value.AsUTF16().c_str(), Value.length() * sizeof(char16_t));
-    }
+		if (sz)
+		{
+			Write(data, sz);
+		}
+	}
+	
+	void recv(std::vector<u8>& payload, u32 channel, u64 timeout)
+	{
+		Packet::Header* header = (Packet::Header*)memalign(0x1000, sizeof(Packet::Header));
+		
+		Read(header, sizeof(Packet::Header));		
 
-    void InCommandBlock::WriteBuffer(void *Buf, size_t Size)
-    {
-        memcpy(&base.blockbuf[base.position], Buf, Size);
-        base.position += Size;
-    }
+		if (header->size > 32000000)
+		{
+			free((void*)header);
+			return;
+		}
 
-    void InCommandBlock::Send()
-    {
-        WriteSimple(base.blockbuf, BlockSize);
-        operator delete[](base.blockbuf, std::align_val_t(0x1000));
-    }
+		payload.resize(header->size);
+		
+		void* buffer = memalign(0x1000, header->size);
 
-    OutCommandBlock::OutCommandBlock()
-    {
-        base.position = 0;
-        base.blockbuf = new(std::align_val_t(0x1000)) u8[BlockSize]();
-        ReadSimple(base.blockbuf, BlockSize);
-        magic = Read32();
-        res = Read32();
-    }
+		Read(buffer, header->size);
+		memcpy((void*)payload.data(), buffer, header->size);
 
-    void OutCommandBlock::Cleanup()
-    {
-        operator delete[](base.blockbuf, std::align_val_t(0x1000));
-    }
+		free(buffer);
+		free((void*)header);
+	}
+	
+	enum EntryType : u8
+	{
+		Entry_None = 0,
+		Entry_Files = 1,
+		Entry_Dirs = 2
+	};
+	
+	std::string urlEncode(std::string value)
+	{
+		std::ostringstream escaped;
+		escaped.fill('0');
+		escaped << std::hex;
 
-    bool OutCommandBlock::IsValid()
-    {
-        if(magic != OutputMagic) return false;
-        return R_SUCCEEDED(res);
-    }
+		for (std::string::const_iterator i = value.begin(), n = value.end(); i != n; ++i)
+		{
+			std::string::value_type c = (*i);
 
-    u32 OutCommandBlock::Read32()
-    {
-        u32 val = 0;
-        ReadBuffer(&val, sizeof(u32));
-        return val;
-    }
 
-    u64 OutCommandBlock::Read64()
-    {
-        u64 val = 0;
-        ReadBuffer(&val, sizeof(u64));
-        return val;
-    }
+			if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~' || c == '/')
+			{
+				escaped << c;
+				continue;
+			}
 
-    pu::String OutCommandBlock::ReadString()
-    {
-        u32 len = Read32();
-        char16_t *str = new char16_t[len + 1]();
-        ReadBuffer(str, len * sizeof(char16_t));
-        pu::String nstr(str);
-        delete[] str;
-        return nstr;
-    }
+			escaped << std::uppercase;
+			escaped << '%' << std::setw(2) << int((unsigned char) c);
+			escaped << std::nouppercase;
+		}
 
-    void OutCommandBlock::ReadBuffer(void *Buf, size_t Size)
+		return escaped.str();
+	}
+	
+	std::string resolvePath(std::string Path)
+	{
+		Path.erase(std::remove(Path.begin(), Path.end(), ':'), Path.end());
+		return (Path);
+	}
+	
+	std::vector<pu::String> GetEntires(const std::string& Path, EntryType type)
     {
-        memcpy(Buf, &base.blockbuf[base.position], Size);
-        base.position += Size;
-    }
+		std::string pathRequest = "/api/directoryList/";
+		pathRequest += resolvePath(Path);
+        std::vector<pu::String> results;
+		std::vector<u8> buffer;
+		send(pathRequest.c_str());
+		recv(buffer);
+		buffer.push_back(0);
+		
+		rapidjson::Document entries;
+		entries.Parse((const char*)buffer.data());
+		
+		if (entries.IsObject())
+		{
+			if ((type == Entry_Files) && entries.HasMember("files") && entries["files"].IsArray())
+			{
+				auto& data = entries["files"];
 
-    In32::In32(u32 Value) : val(Value)
-    {
-    }
+				for (auto itr = data.Begin(); itr != data.End(); ++itr)
+				{
+					auto& e = *itr;
 
-    void In32::ProcessIn(InCommandBlock &block)
-    {
-        block.Write32(val);
-    }
+					if (!e.HasMember("name") || !e["name"].IsString())
+					{
+						continue;
+					}
 
-    void In32::ProcessAfterIn()
-    {
-    }
+					results.push_back(pu::String(e["name"].GetString()));
+				}
+			}
 
-    void In32::ProcessOut(OutCommandBlock &block)
-    {
-    }
+			if ((type == Entry_Dirs) && entries.HasMember("dirs") && entries["dirs"].IsArray())
+			{
+				auto& data = entries["dirs"];
 
-    void In32::ProcessAfterOut()
-    {
-    }
+				for (auto itr = data.Begin(); itr != data.End(); ++itr)
+				{
+					auto& e = *itr;
 
-    Out32::Out32(u32 &Value) : val(Value)
-    {
-    }
+					if (!e.HasMember("name") || !e["name"].IsString())
+					{
+						continue;
+					}
+					results.push_back(pu::String(e["name"].GetString()));
+				}
+			}
+		}
 
-    void Out32::ProcessIn(InCommandBlock &block)
-    {
+        return results;
     }
+	
+	std::vector<pu::String> GetDirectories(pu::String Path)
+	{
+		return GetEntires(Path.AsUTF8(), Entry_Dirs);
+	}
 
-    void Out32::ProcessAfterIn()
+    std::vector<pu::String> GetFiles(pu::String Path)
     {
-    }
-
-    void Out32::ProcessOut(OutCommandBlock &block)
-    {
-        val = block.Read32();
-    }
-
-    void Out32::ProcessAfterOut()
-    {
-    }
-
-    In64::In64(u64 Value) : val(Value)
-    {
-    }
-
-    void In64::ProcessIn(InCommandBlock &block)
-    {
-        block.Write64(val);
-    }
-
-    void In64::ProcessAfterIn()
-    {
-    }
-
-    void In64::ProcessOut(OutCommandBlock &block)
-    {
-    }
-
-    void In64::ProcessAfterOut()
-    {
-    }
-
-    Out64::Out64(u64 &Value) : val(Value)
-    {
-    }
-
-    void Out64::ProcessIn(InCommandBlock &block)
-    {
-    }
-
-    void Out64::ProcessAfterIn()
-    {
-    }
-
-    void Out64::ProcessOut(OutCommandBlock &block)
-    {
-        val = block.Read64();
-    }
-
-    void Out64::ProcessAfterOut()
-    {
-    }
-
-    InString::InString(pu::String Value) : val(Value)
-    {
-    }
-
-    void InString::ProcessIn(InCommandBlock &block)
-    {
-        block.WriteString(val);
-    }
-
-    void InString::ProcessAfterIn()
-    {
-    }
-
-    void InString::ProcessOut(OutCommandBlock &block)
-    {
-    }
-
-    void InString::ProcessAfterOut()
-    {
-    }
-
-    OutString::OutString(pu::String &Value) : val(Value)
-    {
-    }
-
-    void OutString::ProcessIn(InCommandBlock &block)
-    {
-    }
-
-    void OutString::ProcessAfterIn()
-    {
-    }
-
-    void OutString::ProcessOut(OutCommandBlock &block)
-    {
-        val = block.ReadString();
-    }
-
-    void OutString::ProcessAfterOut()
-    {
-    }
-
-    InBuffer::InBuffer(void *Buf, size_t Sz) : buf(Buf), sz(Sz)
-    {
-    }
-
-    void InBuffer::ProcessIn(InCommandBlock &block)
-    {
-    }
-
-    void InBuffer::ProcessAfterIn()
-    {
-        u8 *alignbuf = new (std::align_val_t(0x1000)) u8[sz]();
-        memcpy(alignbuf, buf, sz);
-        WriteSimple(alignbuf, sz);
-        operator delete[](alignbuf, std::align_val_t(0x1000));
-    }
-
-    void InBuffer::ProcessOut(OutCommandBlock &block)
-    {
-    }
-
-    void InBuffer::ProcessAfterOut()
-    {
-    }
-
-    OutBuffer::OutBuffer(void *Buf, size_t Sz) : buf(Buf), sz(Sz)
-    {
-    }
-
-    void OutBuffer::ProcessIn(InCommandBlock &block)
-    {
-    }
-
-    void OutBuffer::ProcessAfterIn()
-    {
-    }
-
-    void OutBuffer::ProcessOut(OutCommandBlock &block)
-    {
-    }
-
-    void OutBuffer::ProcessAfterOut()
-    {
-        u8 *alignbuf = new (std::align_val_t(0x1000)) u8[sz]();
-        ReadSimple(alignbuf, sz);
-        memcpy(buf, alignbuf, sz);
-        operator delete[](alignbuf, std::align_val_t(0x1000));
+        return GetEntires(Path.AsUTF8(), Entry_Files);
     }
 }
