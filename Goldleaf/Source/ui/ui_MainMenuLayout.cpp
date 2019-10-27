@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -163,7 +163,7 @@ namespace ui
         if(GetLaunchMode() == LaunchMode::Applet) lmode = set::GetDictionaryEntry(290);
         if(GetLaunchMode() == LaunchMode::Application) lmode = set::GetDictionaryEntry(291);
 
-        mainapp->LoadMenuData("Goldleaf v" + GetVersion(), "Info", exmode.AsUTF8() + ", " + lmode.AsUTF8());
+        mainapp->LoadMenuData("GoldBricks v" + GetVersion(), "Info", exmode.AsUTF8() + ", " + lmode.AsUTF8());
         mainapp->LoadLayout(mainapp->GetAboutLayout());
     }
 }

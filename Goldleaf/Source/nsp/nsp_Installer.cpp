@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -177,7 +177,7 @@ namespace nsp
                             pu::String cnt = cnts[i];
                             if(fs::GetExtension(cnt) == "dat")
                             {
-                                icon = "sdmc:/" + GoldleafDir + "/meta/" + controlncaid + ".jpg";
+                                icon = "sdmc:/" + GoldBricksDir + "/meta/" + controlncaid + ".jpg";
                                 controlfs.CopyFile(cnt, icon);
                                 break;
                             }

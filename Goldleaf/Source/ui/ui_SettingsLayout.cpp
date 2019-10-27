@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -67,7 +67,7 @@ namespace ui
         this->optsMenu->SetVisible(false);
         this->progressInfo->SetVisible(true);
         mainapp->LoadMenuHead(set::GetDictionaryEntry(359) + " " + Fw.display_version + "...");
-        auto outdir = sd->FullPathFor(GoldleafDir + "/dump/update/" + Fw.display_version);
+        auto outdir = sd->FullPathFor(GoldBricksDir + "/dump/update/" + Fw.display_version);
         sd->DeleteDirectory(outdir);
         exp->CopyDirectoryProgress(Input, outdir, [&](double Done, double Total)
         {
@@ -88,7 +88,7 @@ namespace ui
         this->optsMenu->SetVisible(false);
         this->progressInfo->SetVisible(true);
         mainapp->LoadMenuHead(set::GetDictionaryEntry(359) + " " + Fw.display_version + "...");
-        auto outnsp = sd->FullPathFor(GoldleafDir + "/dump/update/" + Fw.display_version + ".nsp");
+        auto outnsp = sd->FullPathFor(GoldBricksDir + "/dump/update/" + Fw.display_version + ".nsp");
         sd->DeleteFile(outnsp);
         nsp::GenerateFrom(exp->FullPathFor(Input), outnsp, [&](u64 Done, u64 Total)
         {

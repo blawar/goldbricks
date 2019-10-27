@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -159,7 +159,7 @@ namespace acc
 
     std::string GetCachedUserIcon()
     {
-        return "sdmc:/" + GoldleafDir + "/userdata/" + hos::FormatHex128(selected_user) + ".jpg";
+        return "sdmc:/" + GoldBricksDir + "/userdata/" + hos::FormatHex128(selected_user) + ".jpg";
     }
 
     bool IsLinked()

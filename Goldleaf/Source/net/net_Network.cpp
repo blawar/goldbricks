@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -57,7 +57,7 @@ namespace net
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headerdata);
         }
         curl_easy_setopt(curl, CURLOPT_URL, URL.c_str());
-        curl_easy_setopt(curl, CURLOPT_USERAGENT, "Goldleaf");
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "GoldBricks");
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
@@ -78,7 +78,7 @@ namespace net
             tmpcb = Callback;
             CURL *curl = curl_easy_init();
             curl_easy_setopt(curl, CURLOPT_URL, URL.c_str());
-            curl_easy_setopt(curl, CURLOPT_USERAGENT, "Goldleaf");
+            curl_easy_setopt(curl, CURLOPT_USERAGENT, "GoldBricks");
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
             curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
@@ -98,7 +98,7 @@ namespace net
         bool diff = false;
         if(HasConnection())
         {
-            std::string js = RetrieveContent("https://api.github.com/repos/xortroll/goldleaf/releases", "application/json");
+            std::string js = RetrieveContent("https://api.github.com/repos/xortroll/goldbricks/releases", "application/json");
             JSON j = JSON::parse(js);
             std::string latestid = j[0]["tag_name"].get<std::string>();
             Version latestv = Version::FromString(latestid);

@@ -1,7 +1,7 @@
 
 /*
 
-    Goldleaf - Multipurpose homebrew tool for Nintendo Switch
+    GoldBricks - Multipurpose homebrew tool for Nintendo Switch
     Copyright (C) 2018-2019  XorTroll
 
     This program is free software: you can redistribute it and/or modify
@@ -49,7 +49,7 @@ namespace set
         void ApplyProgressBarColor(pu::ui::elm::ProgressBar::Ref &PBar);
     };
 
-    static const std::string SettingsFile = "sdmc:/" + GoldleafDir + "/settings.json";
+    static const std::string SettingsFile = "sdmc:/" + GoldBricksDir + "/settings.json";
 
     Settings ProcessSettings();
     bool Exists();
