@@ -1,6 +1,6 @@
 <img src="GoldBricks/RomFs/Logo.png" alt="drawing" width="400"/>
 
-![License](https://img.shields.io/badge/License-GPLv3-blue.svg) [![Releases](https://img.shields.io/github/downloads/xortroll/goldbricks/total.svg)](https://github.com/XorTroll/GoldBricks/releases/latest) [![LatestVer](https://img.shields.io/github/release-pre/xortroll/goldbricks.svg)](https://github.com/XorTroll/GoldBricks/releases/latest)
+![License](https://img.shields.io/badge/License-GPLv3-blue.svg) [![Releases](https://img.shields.io/github/downloads/blawar/goldbricks/total.svg)](https://github.com/blawar/GoldBricks/releases/latest) [![LatestVer](https://img.shields.io/github/release-pre/blawar/goldbricks.svg)](https://github.com/blawar/GoldBricks/releases/latest)
 
 > GoldBricks is multipurpose homebrew tool for Nintendo Switch for those souls with the impure of heart.
 
@@ -16,8 +16,8 @@ There is not enough free memory left to add NSZ support in applet mode.  Therefo
 
 1. [Features](#features)
 2. [Disclaimer](#disclaimer)
-3. [Quark and remote PC](#quark-and-remote-pc)
-4. [Forwarding](#forwarding)
+3. [Nut and remote PC](#nut-and-remote-pc)
+4. [GDrive Installs](#gdrive)
 5. [Settings](#settings)
 6. [Known bugs](#known-bugs)
 7. [Contributing](#contributing)
@@ -81,13 +81,13 @@ NSPs which don't have (nor require) a ticket are "standard crypto" NSPs. Standar
 
 GoldBricks will display whether a ticket is present or not, and if so, it's titlekey. Titlekeys are required to decrypt and access titles' content which require a ticket. Otherwise, they are undecryptable, hence unlaunchable by the system.
 
-**TL;DR:** **Always** try to avoid untrusted NSPs, and if you go ahead and install CDN NSPs with tickets, avoid going online, or use special tools such as 90DNS, or you'll be banned for sure.
+**TL;DR:** **Always** try to avoid untrusted NSPs, and if you go ahead and install CDN NSPs with tickets, avoid going online, or use special tools such as Incognito, or you'll be banned for sure.
 
-## Quark and remote PC
+## Nut and remote PC
 
-Quark is a PC tool, with a fancy UI and made in Java, in order to help GoldBricks with the remote PC option. It should work on Windows, Linux or Mac.
+Nut is a PC tool, with a fancy UI and made in Python, in order to help GoldBricks with the remote PC option. It should work on Windows, Linux, and Mac.
 
-Only requirement for Quark to work is **JRE/JDK 8u60 or higher**.
+Nut can be downloaded here: <a href="https://github.com/blawar/nut">https://github.com/blawar/nut</a> .  Windows users can download the prepackaged exe, all other users should download master and run server.py.
 
 **One time setup**:
 
@@ -105,17 +105,13 @@ Only requirement for Quark to work is **JRE/JDK 8u60 or higher**.
 
 7. Click on the button below "Install WCID Driver" or "Replace Driver"
 
-8. Done. Now you can use GoldBricks and Quark to directly access your PC!
+8. Done. Now you can use GoldBricks and Nut to directly access your PC!
 
-**Note:** To use it correctly, make sure you open GoldBricks and connect the Switch with your PC before you launch Quark. Nevertheless, Quark will warn when USB connection is gone or no USB connection is found.
+**Note:** To use it correctly, make sure you open GoldBricks and connect the Switch with your PC before you launch Nut. Nevertheless, Nut will warn when USB connection is gone or no USB connection is found.
 
-## Forwarding
+# GDrive
 
-GoldBricks is released along with a NSP, in order to launch GoldBricks as an installed title, and take advantage of extra RAM and features such as web browsing.
-
-The NSP is a forwarder since **0.6**, what means that, instead of having GoldBricks's source inside the NSP, it simply loads the NRO from the SD card, meaning that only the NRO should be updated instead of having to reinstall the NSP.
-
-GoldBricks's forwarding code tries to locate GoldBricks (`GoldBricks.nro`) in `sd:/switch/` and `sd:/switch/GoldBricks/`. If it isn't found, an error message will be displayed.
+To access GDrive, you must use Nut via USB, then access your PC through the gdrive folder in GoldBricks.  Team Drives are also supported.
 
 ## Settings
 
@@ -155,8 +151,6 @@ So, via this configurations, UI's images, resources, element sizes and even tran
 
 ## Known bugs
 
-- On Atmosphère and SX OS, exiting GoldBricks via HOME menu (as a NRO) seems to crash the system on 7.x firmwares due to a weird USB bug present on that specific versions. Any non-7.x firmware doesn't have this issue.
-
 - Apparently, after browsing (more than 4 times?) and then browsing (specific?) empty directories crashes GoldBricks. This issue is strangely common and needs to be looked into.
 
 ## Contributing
@@ -177,19 +171,11 @@ Read this before making any new translations:
 
 ### Credits
 
-The main concepts of GoldBricks are and have been developed by me (XorTroll), but without the effort and support of many others, this project wouldn't have been a thing:
+The main concepts of GoldBricks are and have been developed by me (XorWar), but without the effort and support of many others, this project wouldn't have been a thing:
 
 - Adubbz and all the (old) [Tinfoil](https://github.com/Adubbz/Tinfoil) contributors, for their huge work with title installing.
 
-- C4Phoenix, for his awesome work doing this project's logo, and the GIF displayed when launching the installed forwarder.
-
 - All the graphics except GoldBricks's logo (see credit above) were grabbed from [Icons8](https://icons8.com).
-
-- 2767mr, for all the support given in Goldtree.
-
-- developer.su for [NS-USBloader](https://github.com/developersu/ns-usbloader), which helped a lot on the development of Quark, mainly on the usage of usb4java and the base of a multi-platform JavaFX Java project.
-
-- Simon for his libusbK implementation for C#, which has made Goldtree client possible.
 
 - shchmue and blawar for the system to get tickets from system save data without breaking anything, found in [Lockpick](https://github.com/shchmue/Lockpick).
 
@@ -197,6 +183,4 @@ The main concepts of GoldBricks are and have been developed by me (XorTroll), bu
 
 - All the testers, for reporting bugs and helping a lot with the project's development.
 
-### Discord and beta testing
 
-If you would like to be more informed about my projects' status and support, you should check [my Discord server](https://discord.gg/yTSfphh). It's a simple server for Nintendo hacking and homebrew, mainly focused on my projects. If you would like to be a beta-tester, then this is what you're looking for.
