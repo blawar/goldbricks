@@ -7,14 +7,14 @@ endif
 TOPDIR ?= $(CURDIR)
 include $(DEVKITPRO)/libnx/switch_rules
 
-VER_MAJOR	:= 0
-VER_MINOR	:= 7
-VER_MICRO	:= 3
+VER_MAJOR	:= 1
+VER_MINOR	:= 0
+VER_MICRO	:= 0
 
 APP_TITLE   := GoldBricks
 APP_AUTHOR  := XorWar
 APP_VERSION := $(VER_MAJOR).$(VER_MINOR).$(VER_MICRO)
-APP_TITLEID	:= 050032A5CF12E000
+APP_TITLEID	:= 05000BADC0D30000
 
 TARGET      := GoldBricks
 ICON		:= Icon.jpg
