@@ -2,6 +2,10 @@
 
 > GoldBricks is multipurpose homebrew tool for Nintendo Switch for those souls with the impure of heart.
 
+# USB Installer
+
+It is extremely important to note that this does not work with Quark, Fluffy, or NS-USBLoader.  This only works with [Nut](#nut-and-remote-pc) for USB installs.
+
 # High Memory Requirement
 
 There is not enough free memory left to add NSZ support in applet mode.  Therefore title installs will require that GoldBricks be ran in high memory mode via title override or a piracy NSP forwarder.
