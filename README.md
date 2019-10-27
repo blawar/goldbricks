@@ -1,5 +1,3 @@
-<img src="GoldBricks/RomFs/Logo.png" alt="drawing" width="400"/>
-
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg) [![Releases](https://img.shields.io/github/downloads/blawar/goldbricks/total.svg)](https://github.com/blawar/GoldBricks/releases/latest) [![LatestVer](https://img.shields.io/github/release-pre/blawar/goldbricks.svg)](https://github.com/blawar/GoldBricks/releases/latest)
 
 > GoldBricks is multipurpose homebrew tool for Nintendo Switch for those souls with the impure of heart.
@@ -8,7 +6,7 @@
 
 There is not enough free memory left to add NSZ support in applet mode.  Therefore title installs will require that GoldBricks be ran in high memory mode via title override or a piracy NSP forwarder.
 
-<img src="Screenshot-gleaf.jpg" alt="drawing" width="400"/> <img src="Screenshot-quark.png" alt="drawing" width="300"/>
+<img src="Screenshot-gleaf.jpg" alt="drawing" width="400"/> <img src="https://raw.githubusercontent.com/blawar/nut/master/public_html/images/nutserver.png" alt="drawing" width="300"/>
 
 > Having any issues? Check [this help document](docs/FAQ.md) for help!
 
