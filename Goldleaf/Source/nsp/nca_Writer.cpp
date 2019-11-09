@@ -2,6 +2,9 @@
 #include <zstd.h>
 #include <string.h>
 
+// 4MB Buffer
+#define NSZ_BUFFER_SZ 0x400000
+
 class Keys
 {
 public:
@@ -363,7 +366,7 @@ public:
 
                append(m_deflateBuffer, (const u8*)buffOut, output.pos);
 
-               if (m_deflateBuffer.size() >= 0x1000000) // 16 MB
+               if (m_deflateBuffer.size() >= NSZ_BUFFER_SZ)
                {
                     encrypt(m_deflateBuffer.data(), m_deflateBuffer.size(), m_offset);
 
@@ -424,9 +427,9 @@ public:
 
           while (sz)
           {
-               if (m_buffer.size() + sz >= 0x1000000)
+               if (m_buffer.size() + sz >= NSZ_BUFFER_SZ)
                {
-                    u64 chunk = 0x1000000 - m_buffer.size();
+                    u64 chunk = NSZ_BUFFER_SZ - m_buffer.size();
                     append(m_buffer, ptr, chunk);
 
                     processChunk(m_buffer.data(), m_buffer.size());

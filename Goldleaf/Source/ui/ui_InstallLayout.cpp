@@ -42,12 +42,6 @@ namespace ui
 
     void InstallLayout::StartInstall(pu::String Path, fs::Explorer *Exp, Storage Location, bool OmitConfirmation)
     {
-		if(envGetHeapOverrideSize() < 900 * 1000 * 1000)
-		{
-			mainapp->CreateShowDialog("Insufficient Memory", "Due to unoptimized code, GoldBricks requires more memory to run.  Please run this application using title override or a NSP forwarder.", { set::GetDictionaryEntry(234) }, true);
-			return;
-		}
-		
         nsp::Installer inst(Path, Exp, Location);
 
         auto rc = inst.PrepareInstallation();
