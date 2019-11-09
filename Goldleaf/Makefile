@@ -9,7 +9,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 
 VER_MAJOR	:= 1
 VER_MINOR	:= 0
-VER_MICRO	:= 0
+VER_MICRO	:= 1
 
 APP_TITLE   := GoldBricks
 APP_AUTHOR  := XorWar

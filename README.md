@@ -8,10 +8,6 @@ It is extremely important to note that this does not work with Quark, Fluffy, or
 
 If you really insist on using the old USB Installers, I will maintain a release that still has them.  Currently 0.7.3 in the releases section supports these old USB installers.
 
-# High Memory Requirement
-
-There is not enough free memory left to add NSZ support in applet mode.  Therefore title installs will require that GoldBricks be ran in high memory mode via title override or a piracy NSP forwarder.
-
 <img src="Screenshot-gleaf.jpg" alt="drawing" width="400"/> <img src="https://raw.githubusercontent.com/blawar/nut/master/public_html/images/nutserver.png" alt="drawing" width="300"/>
 
 > Having any issues? Check [this help document](docs/FAQ.md) for help!
